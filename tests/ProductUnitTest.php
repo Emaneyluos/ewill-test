@@ -5,7 +5,7 @@ namespace App\Tests;
 use App\Entity\Product;
 use PHPUnit\Framework\TestCase;
 
-class ProductTest extends TestCase
+class ProductUnitTest extends TestCase
 {
     public function testIsTrue(): void
     {
