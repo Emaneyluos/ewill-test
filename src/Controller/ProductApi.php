@@ -75,14 +75,10 @@ class ProductApi extends AbstractController
     #[Route('/api/products', name:"create", methods: ['POST'])] 
     public function createProduct(Request $request, SerializerInterface $serializer, EntityManagerInterface $em,
         UrlGeneratorInterface $urlGenerator, AuthorRepository $authorRepository): JsonResponse {
+        
         $product = $serializer->deserialize($request->getContent(), Product::class, 'json');
         $em->persist($product);
         $em->flush();
-
-        $content = $request->toArray();
-        $idAuthor = $content['idAuthor'] ?? -1;
-
-        $product->setAuthor($authorRepository->find($idAuthor));
 
 
 		$jsonProduct = $serializer->serialize($product, 'json');
@@ -106,12 +102,9 @@ class ProductApi extends AbstractController
     #[Route('/api/products/{id}', name:"update", methods:['PUT'])]
     public function updateProduct(Request $request, SerializerInterface $serializer,
                         Product $currentProduct, EntityManagerInterface $em, AuthorRepository $authorRepository): JsonResponse {
+
         $updatedProduct = $serializer->deserialize($request->getContent(), Product::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $currentProduct]);
 
-        $content = $request->toArray();
-        $idAuthor = $content['idAuthor'] ?? -1;
-
-        $updatedProduct->setAuthor($authorRepository->find($idAuthor));
 
         $em->persist($updatedProduct);
         $em->flush();

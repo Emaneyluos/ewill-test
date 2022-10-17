@@ -35,7 +35,7 @@ export default {
               <td>{{ product.price }}€</td>
               <td>
                 <router-link :to="{ name: 'Show', params: { id: product.id}}">Go to Home</router-link>
-             
+              </td>
           </tr>
 
       </tbody>
