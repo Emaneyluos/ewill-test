@@ -1,49 +1,35 @@
 <script>
+import List from './List.vue';
+
 export default {
-  data() {
-    return {
-      info: null
-    }
-  },
-  methods: {
-   
-  },
-  mounted () {
+    data() {
+        return {
+          info: null,
+        }
+    },
+    mounted () {
     axios
       .get('/api/products')
       .then(response => (this.info = response.data));
-  }
+  },
+    methods: {
+      refresh (){
+        axios
+        .get('/api/products')
+        .then(response => (this.info = response.data));
+      }
+    },
+    components: { List }
 }
 </script>
 
 <template>
 <div class="main">
-  <div class="list">
-    <table class="table">
-      <thead>
-          <tr>
-              <th>Reference</th>
-              <th>Name</th>
-              <th>Price</th>
-          </tr>
-      </thead>
-      <tbody>
-      
-          <tr v-for="product in info">
-              <td>{{ product.reference }}</td>
-              <td>{{ product.name }}</td>
-              <td>{{ product.price }}€</td>
-              <td>
-                <router-link :to="{ name: 'Show', params: { id: product.id}}">Go to Home</router-link>
-              </td>
-          </tr>
 
-      </tbody>
-    </table>
-  </div>
+  <List :info="info"></List>
 
   <div class="product">
-  <router-view>
+  <router-view @refreshList="refresh">
   </router-view>
   </div>
 
@@ -55,7 +41,4 @@ export default {
   display: flex;
 }
 
-.list {
-  width: 50vw;
-}
 </style>

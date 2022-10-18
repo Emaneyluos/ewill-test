@@ -1,32 +1,48 @@
 <script>
+
 export default {
   data() {
     return {
       product: null,
-      url: null
+      url: null,
+      lastId :null   
     }
   },
+
   methods: {
-    callProduct(id) {
-      this.url = '/api/products/' + id;
+    deleteProduct(){
+      axios
+        .delete(this.url)
+        .then(console.log("delete"));
+      this.$emit('refreshList')
+    }
+  },
+  
+  beforeMount() {
+    this.url = '/api/products/' + this.$store.state.id;
     axios
       .get(this.url)
       .then(response => (this.product = response.data));
-      // console.log("refresh");
-
-    },
-
-    delete(){
-      axios.delete(this.url);
-    }
+    
   },
+
+  beforeUpdate() {
+    if (this.lastId !=  this.$store.state.id)
+    {
+      this.url = '/api/products/' + this.$store.state.id;
+      axios
+        .get(this.url)
+        .then(response => (this.product = response.data));
+      this.lastId = this.$store.state.id;
+    } 
+  },
+  
 }
 
 
 </script>
 
 <template>
-{{ callProduct($route.params.id)}}
 <div>
   <p>Reference: {{ product.reference }}</p>
 
@@ -44,7 +60,7 @@ export default {
 
 <button form="form1" class="btn btn-primary" >Sauvegarder</button>
 
-<button @click="delete" class="btn btn-danger" >Supprimer</button>
+<button @click="deleteProduct" class="btn btn-danger">Supprimer</button>
 
 </template>
 

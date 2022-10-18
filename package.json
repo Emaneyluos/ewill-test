@@ -24,6 +24,7 @@
         "vue": "^3.2.41",
         "vue-loader": "^17.0.0",
         "vue-router": "^4.1.5",
-        "vue-template-compiler": "^2.7.13"
+        "vue-template-compiler": "^2.7.13",
+        "vuex": "^4.0.2"
     }
 }

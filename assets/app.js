@@ -15,9 +15,12 @@ import './bootstrap';
 
 
 import { createApp } from 'vue';
+import { createStore } from 'vuex';
 import App from './js/App.vue';
 import * as VueRouter from 'vue-router';
 import Show from './js/Show.vue';
+import List from './js/List.vue';
+
 
 const router = VueRouter.createRouter({
     history: VueRouter.createWebHistory(),
@@ -34,11 +37,35 @@ const router = VueRouter.createRouter({
         }
       ]
     })
+
+const store = createStore({
+    state: {
+        id: 10
+    },
+    mutations: {
+        CHANGE_ID(state, newId) {
+            state.id = Number(newId)
+        },
+       
+    },
+    actions: {
+        updateId({ commit }, id) {
+          
+            commit('CHANGE_ID', id)
+           
+        }
+    }
+})
     
     const app = createApp(App)
+    app.use(store)
     app.use(router).mount('#vue')
+    
     app.mount('vue')
-
+    app
+    .component('Show', Show)
+    .component('List', List)
+  
 // new Vue({
 //     el: '#app', // where <div id="app"> in your DOM contains the Vue template
 // });

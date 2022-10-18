@@ -13,7 +13,7 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 20; $i++) {
             $product = new Product();
 
-            $product->setReference($i)
+            $product->setReference(rand(1, 50))
                     ->setName('Produit n°'. $i)
                     ->setPrice(rand(1, 200));
                     
