@@ -3,7 +3,7 @@
 export default {
 
     props: {
-        info : Array
+        infoFiltered : Array
     },
   computed: {
         // id() {
@@ -32,7 +32,7 @@ export default {
       </thead>
       <tbody>
       
-          <tr v-for="product in this.info">
+          <tr v-for="product in this.infoFiltered">
               <td>{{ product.reference }}</td>
               <td>{{ product.name }}</td>
               <td>{{ product.price }}€</td>

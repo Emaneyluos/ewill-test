@@ -65,7 +65,7 @@ const store = createStore({
     app
     .component('Show', Show)
     .component('List', List)
-  
+    
 // new Vue({
 //     el: '#app', // where <div id="app"> in your DOM contains the Vue template
 // });

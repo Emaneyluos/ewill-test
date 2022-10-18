@@ -5,29 +5,37 @@ export default {
     data() {
         return {
           info: null,
-          searchReference: null,
-          searchName: null
+          infoFiltered: null,
+          searchName: ''
         }
     },
-    beforeMounte () {
+   
+
+  beforeMount() {
     axios
       .get('/api/products')
-      .then(response => (this.info = response.data));
-  },
-    methods: {
-      refresh (){
-        axios
-        .get('/api/products')
-        .then(response => (this.info = response.data));
-      }
-    },
-    components: { List },
+      .then(response => {
+        this.info = response.data
+        this.infoFiltered = this.info
+      });
 
-    computed: {
-      productName(){
-        return this.info.filter(name => name == searchName)
-      }
+  },
+
+  methods: {
+    refresh (){
+      axios
+      .get('/api/products')
+      .then(response => (this.info = response.data));
     }
+  },
+    
+  beforeUpdate() {
+      this.infoFiltered = this.info.filter(produit =>
+       produit.name.toLowerCase().match(this.searchName.toLowerCase())); 
+  },
+
+    components: { List },
+    
 }
 </script>
 
@@ -37,17 +45,11 @@ export default {
 
   <div class="list">
     <div class="search">
-      <label for="searchRef">Recherche par reference: </label>
-      <input type="text" name="searchRef" id="searchRef" v-model="searchReference">
       <label for="searchName">Recherche par nom: </label>
       <input type="text" name="searchName" id="searchName" v-model="searchName">
     </div>
 
-    <li v-for="test in productName">
-      <p>{{ test.price }}</p>
-    </li>
-
-    <List :info="info"></List>
+    <List :infoFiltered="infoFiltered"></List>
   </div>
 
   <div class="product">
