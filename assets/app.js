@@ -40,7 +40,7 @@ const router = VueRouter.createRouter({
 
 const store = createStore({
     state: {
-        id: 10
+        id: 0
     },
     mutations: {
         CHANGE_ID(state, newId) {

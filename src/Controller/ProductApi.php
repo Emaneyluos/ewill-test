@@ -74,7 +74,7 @@ class ProductApi extends AbstractController
      */
     #[Route('/api/products', name:"create", methods: ['POST'])] 
     public function createProduct(Request $request, SerializerInterface $serializer, EntityManagerInterface $em,
-        UrlGeneratorInterface $urlGenerator, AuthorRepository $authorRepository): JsonResponse {
+        UrlGeneratorInterface $urlGenerator): JsonResponse {
         
         $product = $serializer->deserialize($request->getContent(), Product::class, 'json');
         $em->persist($product);
@@ -83,7 +83,7 @@ class ProductApi extends AbstractController
 
 		$jsonProduct = $serializer->serialize($product, 'json');
 		
-        $location = $urlGenerator->generate('detailProduct', ['id' => $product->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $location = $urlGenerator->generate('detail', ['id' => $product->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
 
 		return new JsonResponse($jsonProduct, Response::HTTP_CREATED, ["Location" => $location], true);	
     }
@@ -101,7 +101,7 @@ class ProductApi extends AbstractController
      */
     #[Route('/api/products/{id}', name:"update", methods:['PUT'])]
     public function updateProduct(Request $request, SerializerInterface $serializer,
-                        Product $currentProduct, EntityManagerInterface $em, AuthorRepository $authorRepository): JsonResponse {
+                        Product $currentProduct, EntityManagerInterface $em): JsonResponse {
 
         $updatedProduct = $serializer->deserialize($request->getContent(), Product::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $currentProduct]);
 

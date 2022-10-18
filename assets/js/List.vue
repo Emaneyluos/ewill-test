@@ -27,6 +27,7 @@ export default {
               <th>Reference</th>
               <th>Name</th>
               <th>Price</th>
+              <th><router-link :to="{ name: 'Show', params: { id: 0}}"  @click.native='sendUpdateId(0)'>Create</router-link></th>
           </tr>
       </thead>
       <tbody>
@@ -36,7 +37,7 @@ export default {
               <td>{{ product.name }}</td>
               <td>{{ product.price }}€</td>
               <td>
-                <router-link :to="{ name: 'Show', params: { id: product.id}}"  @click.native='sendUpdateId(product.id)'>Go to Home</router-link>
+                <router-link :to="{ name: 'Show', params: { id: product.id}}"  @click.native='sendUpdateId(product.id)'>Afficher le produit</router-link>
               </td>
           </tr>
       </tbody>
